@@ -1,0 +1,53 @@
+{{> header }}
+	<h1>{{title}}</h1>
+	<form class="form-horizontal" id="active-form">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-sm-10">
+					<input class="form-control" placeholder="Código do Ativo" id="active">
+				</div>
+				<div class="col-sm-2">
+					<button class="btn btn-info">Pesquisar</button>
+				</div>
+			</div>
+			<div class="show-info">
+
+			</div>
+		</div>
+	</form>
+	
+
+	<script>
+
+		$('#active-form').submit((e) => {
+			e.preventDefault();
+			$('.show-info').html('Aguarde...');
+			let active = $('#active').val();
+
+			$.ajax({
+				url: `/cotacoes/find?ativo=${active}`,
+				method: "GET",
+			}).done((data) => {
+				console.log('%cSuccess', 'color: green');
+
+				let content = 
+				"<div class='active-content'>"+
+					`<ul>`+
+						`<li><b>Ativo:</b> ${data.symbol}</li>`+
+						`<li><b>Valor:</b> R$${data.price.replace('.', ',')}</li>`+
+						`<li><b>Alta no Dia:</b> <span class="high">R$${data.day_high.replace('.', ',')}</span></li>`+
+						`<li><b>Baixa no Dia:</b> <span class="low">R$${data.day_low.replace('.', ',')}</span></li>`+
+						`<li><b>Valor de Abertura:</b> R$${data.price_open.replace('.', ',')}</li>`+
+					`</ul>`+
+				"</div>";
+
+				$('.show-info').html(content);
+
+			}).fail((err) => {
+				console.log('%cFail', 'color: red');
+				$('.show-info').html(err.responseJSON.message);
+			});	
+		});
+
+	</script>
+{{> footer }}
