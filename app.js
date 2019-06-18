@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
+const cotacaoRouter = require('./src/routes/cotacoes');
+
 const app = express();
 
 const public_path = path.join(__dirname, './public');
@@ -19,14 +21,11 @@ app.set('views', views_path);
 hbs.registerPartials(partials_path);
 
 app.use(express.static(public_path));
+app.use(cotacaoRouter);
 
 // Routes
 // Index Routes
 app.get('', index_controller.index);
-
-// Cotacoes Routes
-app.get('/cotacoes', 		cotacoes_controller.index);
-app.get('/cotacoes/find', 	cotacoes_controller.find);
 
 // About Routes
 app.get('/about', (req, res) => {
