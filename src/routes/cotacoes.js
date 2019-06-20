@@ -3,7 +3,7 @@ const path = require('path');
 
 const router = new express.Router();
 
-const cotacoes_controller = require('../../resources/controllers/cotacoesController.js');
+const cotacoes_controller = require('../controllers/cotacoesController.js');
 
 router.get('/cotacoes', 		cotacoes_controller.index);
 router.get('/cotacoes/find', 	cotacoes_controller.find);

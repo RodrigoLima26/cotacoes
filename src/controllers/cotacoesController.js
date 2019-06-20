@@ -1,4 +1,4 @@
-const cotacao = require('../util/cotacao');
+const cotacao = require('../../resources/util/cotacao');
 
 function index(req, res) {
 	res.render('cotacoes', {
